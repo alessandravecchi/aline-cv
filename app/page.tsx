@@ -13,18 +13,17 @@ import {
   Cpu,
   Rocket,
   TrendingUp,
-  BookOpen,
-  Award,
   FileDown,
   MessageCircle,
   Menu,
   X,
   Sun,
   Moon,
+  Award,
 } from "lucide-react";
 
 /* ============================================================================
-   CONFIG (links, cores, dados)
+   CONFIG
    ========================================================================== */
 const SOCIAL = {
   instagram: "https://www.instagram.com/profe.alinepascale?igsh=bjRla2VzaWdudXFl",
@@ -34,10 +33,12 @@ const SOCIAL = {
 
 const LINKS = {
   cvPdf: "/cv/aline-cv.pdf",
+  premioPdf: "/certificados/aline-sebrae-2025.pdf", // opcional
+  scibizPdf: "/certificados/scibiz-2025.pdf",       // opcional
 };
 
 const WHATSAPP = {
-  phone: "5548988257788",
+  phone: "5548999832081",
   message: "Olá, vi seu portfólio e gostaria de falar com você! 😊",
 };
 
@@ -47,7 +48,20 @@ const COLORS = {
   ring: "ring-white/60 dark:ring-white/10",
 };
 
-/* Dados da página */
+/* Texto “Sobre” */
+const ABOUT_TEXT =  `
+Gestora e mentora com 33 anos de atuação em empresas privadas e públicas, especializada em
+planejamento estratégico, desenvolvimento e modelagem de negócios de impacto e estratégias de mercado.
+Professora e facilitadora em programas nacionais e internacionais, já apoiou mais de 4 mil
+empreendedores e organizações do 3º setor. Fundadora da Cuidatoria, agência de inteligência social
+focada em metodologias de gestão, tecnologia e dados para fortalecer o ecossistema.
+O Brasil tem centenas de milhares de organizações e milhões de voluntários — um gigante que precisa
+de gestão, transparência e dados. Em 2025, conquistei 1º lugar no Prêmio Sebrae Mulher de Negócios
+(Ciência e Tecnologia) com uma tecnologia que mapeia a realidade das OSCs em profundidade e gera
+bases para decisões mais seguras no setor público, privado e nas próprias organizações.
+`;
+
+/* Métricas */
 const HIGHLIGHTS = [
   { label: "Projetos geridos", value: "80+" },
   { label: "Captação viabilizada", value: "R$ 5M+" },
@@ -55,6 +69,7 @@ const HIGHLIGHTS = [
   { label: "Anos de experiência", value: "10+" },
 ] as const;
 
+/* Serviços */
 const TOOLS = [
   {
     title: "Gestão de Projetos",
@@ -78,6 +93,7 @@ const TOOLS = [
   },
 ] as const;
 
+/* Experiências (exemplo) */
 const EXPERIENCES = [
   {
     role: "Gestão & Parcerias",
@@ -99,28 +115,39 @@ const EXPERIENCES = [
   },
 ] as const;
 
+/* Parceiros (exemplo) */
 const PARTNERS = [
-  { name: "Cuidatoria", src: "/aline/images/cuidatoria.png" },
-  { name: "Instituto Parceiro", src: "/aline/images/ong1.png" },
-  { name: "Projeto Cultural", src: "/aline/images/ong2.png" },
-  { name: "Rede Social", src: "/aline/images/ong3.png" },
+  { name: "Cuidatoria", src: "/images/cuidatoria.png" },
+  { name: "Instituto Parceiro", src: "/images/ong1.png" },
+  { name: "Instituto Parceiro", src: "/images/ong2.png" },
+  { name: "Instituto Parceiro", src: "/images/ong3.png" },
 ] as const;
 
+/* Certificados – apenas cards com botão (sem imagem solta) */
 const CERTS = [
+  { title: "Prêmio Sebrae Mulher de Negócios 2025 (1º lugar)", file: LINKS.premioPdf },
   { title: "Gestão de Projetos (certificação)", file: "/certificados/aline-gestao-projetos.pdf" },
   { title: "Captação de Recursos", file: "/certificados/aline-captacao.pdf" },
   { title: "Prestação de Contas & MROSC", file: "/certificados/aline-mrosc.pdf" },
-] as const;
+  { title: "SciBiz 2025", file: LINKS.scibizPdf },
+].filter((c) => !!c.file);
 
+/* Depoimento – somente Priscila */
 const TESTIMONIALS = [
   {
-    name: "Aline Pascale",
-    role: "Gestora e Facilitadora",
-    photo: "/aline/images/aline.jpg",
+    name: "Priscila F.",
+    role: "Inovação | Coord. de Projetos | Especialista em gestão comercial",
+    photo: "",
     text:
-      "“Acredito em processos simples, indicadores úteis e relações de confiança. Transparência e execução caminhando juntas.”",
+      "Aline é uma força da natureza, orientada para o sucesso dos negócios. Se destaca como embaixadora das chamadas de Impacto no Impact Hub Floripa e aplica todo seu conhecimento em favor de causas de impacto, ajudando especialmente pequenos e novos empreendedores a terem maior sucesso em suas jornadas. Admiro a força que ela tem em mentorar vários negócios ao mesmo tempo, sempre com lindas entregas. É uma excelente profissional: melhora o ambiente e os resultados dos projetos que brilhantemente coordena.",
   },
 ] as const;
+
+/* YouTube */
+const VIDEO = {
+  id: "KQvhwvKRjLU",
+  title: "PodIn Mentorando com Elas — Empreendendo no Terceiro Setor",
+};
 
 /* Helpers */
 const fade = (i = 0) => ({
@@ -132,11 +159,14 @@ const fade = (i = 0) => ({
 
 const NAV = [
   { id: "inicio", label: "Início" },
+  { id: "premio", label: "Prêmio" },
+  { id: "sobre", label: "Sobre" },
   { id: "servicos", label: "Serviços" },
   { id: "experiencia", label: "Experiência" },
   { id: "parceiros", label: "Parceiros" },
   { id: "certificados", label: "Certificados" },
   { id: "depoimentos", label: "Depoimentos" },
+  { id: "midia", label: "Na mídia" },
   { id: "contato", label: "Contato" },
 ] as const;
 
@@ -147,7 +177,7 @@ export default function Page() {
   const [copied, setCopied] = useState(false);
   const [active, setActive] = useState<string>("inicio");
   const [open, setOpen] = useState(false);
-  const email = "aline@exemplo.com"; // troque pelo e-mail da Aline
+  const email = "aline.pascale@cuidatoria.com.br";
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -243,16 +273,87 @@ export default function Page() {
         </div>
       </section>
 
+      {/* PRÊMIO — imagem menor e inteira */}
+      <section id="premio" className="mx-auto max-w-6xl px-6 py-8">
+        <Header
+          title="Prêmio — 1º lugar"
+          subtitle="Sebrae Mulher de Negócios • Ciência e Tecnologia • 2025 • SC"
+        />
+        <motion.div {...fade(0)} className="mt-4">
+          <div
+            className={`relative overflow-hidden rounded-2xl border ${COLORS.ring} bg-white/90 dark:bg-slate-900/70 backdrop-blur-md`}
+          >
+            <div className="grid md:grid-cols-[1.2fr,0.8fr] gap-0">
+              {/* Foto */}
+              <div className="relative h-[220px] md:h-[280px] lg:h-[340px]">
+                <Image
+                  src="/images/aline-premio.jpeg"
+                  alt="Aline recebendo o Prêmio Sebrae Mulher de Negócios 2025"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+                <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/95 dark:bg-slate-900/80 px-3 py-1 text-sm shadow">
+                  <Award className="h-4 w-4 text-violet-600" />
+                  1º lugar — SC
+                </div>
+              </div>
+
+              {/* Texto/CTA */}
+              <div className="p-5 md:p-7 flex flex-col justify-center">
+                <h3 className="text-xl md:text-2xl font-extrabold leading-tight">
+                  Reconhecimento ao trabalho em{" "}
+                  <span className={`bg-gradient-to-r ${COLORS.grad} bg-clip-text text-transparent`}>
+                    Ciência e Tecnologia
+                  </span>
+                </h3>
+                <p className="mt-2 text-slate-700 dark:text-slate-300">
+                  Premiada pelo Sebrae Mulher de Negócios 2025 (categoria Ciência e Tecnologia) pelo
+                  protagonismo em gestão, inovação e impacto com transparência.
+                </p>
+
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  <a
+                    href={LINKS.premioPdf}
+                    download
+                    className="inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm bg-white/90 dark:bg-slate-900/60 dark:border-white/10 hover:bg-white dark:hover:bg-slate-900 transition"
+                  >
+                    Ver certificado <Download className="h-4 w-4" />
+                  </a>
+                  <a
+                    href="#contato"
+                    className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm bg-violet-600 text-white hover:bg-violet-700 transition"
+                  >
+                    Falar com Aline
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* SOBRE */}
+      <section id="sobre" className="mx-auto max-w-6xl px-6 py-6">
+        <Header title="Sobre" />
+        <motion.div {...fade(0)} className="mt-3">
+          <div
+            className={`rounded-2xl border ${COLORS.ring} bg-white/80 dark:bg-slate-900/60 backdrop-blur-md p-5 md:p-6 leading-relaxed text-slate-700 dark:text-slate-300`}
+          >
+            <RichMarkdown text={ABOUT_TEXT} />
+          </div>
+        </motion.div>
+      </section>
+
       {/* SERVIÇOS */}
       <section id="servicos" className="mx-auto max-w-6xl px-6 py-10">
-        <Header
-          title="Como posso ajudar"
-          subtitle="Soluções para previsibilidade, transparência e execução."
-        />
+        <Header title="Como posso ajudar" subtitle="Soluções para previsibilidade, transparência e execução." />
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {TOOLS.map(({ title, desc, icon: Icon }, i) => (
             <motion.div key={title} {...fade(i)}>
-              <div className={`h-full rounded-2xl border bg-white/70 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-4 hover:-translate-y-0.5 hover:shadow-md transition`}>
+              <div
+                className={`h-full rounded-2xl border bg-white/70 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-4 hover:-translate-y-0.5 hover:shadow-md transition`}
+              >
                 <div className="flex items-start gap-3">
                   <div className="rounded-xl border p-2 bg-white dark:bg-slate-900 dark:border-white/10">
                     <Icon className="h-5 w-5" aria-hidden />
@@ -274,7 +375,9 @@ export default function Page() {
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           {EXPERIENCES.map((exp, i) => (
             <motion.div key={exp.role} {...fade(i)}>
-              <div className={`rounded-2xl border bg-white/70 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-4 hover:-translate-y-0.5 hover:shadow-md transition`}>
+              <div
+                className={`rounded-2xl border bg-white/70 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-4 hover:-translate-y-0.5 hover:shadow-md transition`}
+              >
                 <h3 className="text-lg font-semibold">{exp.role}</h3>
                 <p className="text-violet-700 dark:text-violet-300 font-medium">{exp.org}</p>
                 <p className="text-sm text-slate-600 dark:text-slate-400">{exp.period}</p>
@@ -295,7 +398,9 @@ export default function Page() {
         <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
           {PARTNERS.map((l, i) => (
             <motion.div key={l.name} {...fade(i)} className="flex items-center justify-center">
-              <div className={`w-full h-[110px] md:h-[130px] rounded-xl bg-white/75 dark:bg-slate-900/60 ${COLORS.ring} shadow-sm hover:shadow-md transition p-3`}>
+              <div
+                className={`w-full h-[110px] md:h-[130px] rounded-xl bg-white/75 dark:bg-slate-900/60 ${COLORS.ring} shadow-sm hover:shadow-md transition p-3`}
+              >
                 <div className="relative w-full h-full">
                   <SkeletonImg src={l.src} alt={l.name} sizes="260px" />
                 </div>
@@ -306,13 +411,15 @@ export default function Page() {
         </div>
       </section>
 
-      {/* CERTIFICADOS */}
+      {/* CERTIFICADOS – sem imagem avulsa */}
       <section id="certificados" className="mx-auto max-w-6xl px-6 py-8">
         <Header title="Certificados" subtitle="Baixe os arquivos oficiais." />
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           {CERTS.map((c, i) => (
             <motion.div key={c.title} {...fade(i)}>
-              <div className={`rounded-2xl border bg-white/70 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-4 hover:-translate-y-0.5 hover:shadow-md transition`}>
+              <div
+                className={`rounded-2xl border bg-white/70 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-4 hover:-translate-y-0.5 hover:shadow-md transition`}
+              >
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-lg bg-violet-500/15 dark:bg-violet-400/15 flex items-center justify-center">
                     <FileDown className="h-5 w-5 text-violet-700 dark:text-violet-300" aria-hidden />
@@ -332,16 +439,24 @@ export default function Page() {
         </div>
       </section>
 
-      {/* DEPOIMENTOS */}
+      {/* DEPOIMENTOS – somente Priscila */}
       <section id="depoimentos" className="mx-auto max-w-6xl px-6 py-12">
         <Header title="Depoimentos" />
         <div className="mt-6 grid md:grid-cols-1 gap-4">
           {TESTIMONIALS.map((t, i) => (
             <motion.div key={t.name} {...fade(i)}>
-              <div className={`rounded-2xl border bg-white/80 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-5 hover:-translate-y-0.5 hover:shadow-md transition`}>
+              <div
+                className={`rounded-2xl border bg-white/80 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-5 hover:-translate-y-0.5 hover:shadow-md transition`}
+              >
                 <div className="flex items-center gap-3">
-                  <div className={`relative h-12 w-12 overflow-hidden rounded-full ${COLORS.ring}`}>
-                    <SkeletonImg src={t.photo} alt={t.name} sizes="48px" className="object-cover" />
+                  <div
+                    className={`relative h-12 w-12 overflow-hidden rounded-full ${COLORS.ring} bg-violet-100 flex items-center justify-center font-semibold text-violet-700`}
+                  >
+                    {t.photo ? (
+                      <Image src={t.photo} alt={t.name} fill className="object-cover" />
+                    ) : (
+                      <span>{t.name.split(" ").map((s) => s[0]).join("").slice(0, 2)}</span>
+                    )}
                   </div>
                   <div>
                     <p className="font-medium">{t.name}</p>
@@ -355,10 +470,22 @@ export default function Page() {
         </div>
       </section>
 
+      {/* NA MÍDIA – vídeo YouTube */}
+      <section id="midia" className="mx-auto max-w-6xl px-6 py-10">
+        <Header title="Na mídia" subtitle="PodIn Mentorando com Elas — Empreendendo no Terceiro Setor" />
+        <motion.div {...fade(0)} className="mt-5">
+          <div className={`rounded-2xl border ${COLORS.ring} bg-white/80 dark:bg-slate-900/60 backdrop-blur-md p-3`}>
+            <VideoEmbed youtubeId={VIDEO.id} title={VIDEO.title} />
+          </div>
+        </motion.div>
+      </section>
+
       {/* CONTATO / RODAPÉ */}
       <footer id="contato" className="relative overflow-hidden">
         <div className="mx-auto max-w-6xl px-6 py-14">
-          <div className={`rounded-3xl border ${COLORS.ring} bg-white/70 dark:bg-slate-900/60 backdrop-blur-md p-8 shadow-xl`}>
+          <div
+            className={`rounded-3xl border ${COLORS.ring} bg-white/70 dark:bg-slate-900/60 backdrop-blur-md p-8 shadow-xl`}
+          >
             <div className="grid md:grid-cols-[1.2fr,0.8fr] gap-8 items-center">
               <div>
                 <h3 className="text-2xl md:text-3xl font-extrabold leading-tight">
@@ -407,31 +534,31 @@ export default function Page() {
                   </div>
                   <Download className="h-4 w-4 opacity-60" aria-hidden />
                 </a>
+                <div className="flex items-center gap-2">
+                  <a
+                    href={SOCIAL.instagram}
+                    target="_blank"
+                    className="rounded-lg p-2 border bg-white/80 dark:bg-slate-900/60 dark:border-white/10 hover:bg-white dark:hover:bg-slate-900 transition"
+                    aria-label="Instagram"
+                  >
+                    <Instagram className="h-4 w-4" aria-hidden />
+                  </a>
+                  <a
+                    href={SOCIAL.linkedin}
+                    target="_blank"
+                    className="rounded-lg p-2 border bg-white/80 dark:bg-slate-900/60 dark:border-white/10 hover:bg-white dark:hover:bg-slate-900 transition"
+                    aria-label="LinkedIn"
+                  >
+                    <Linkedin className="h-4 w-4" aria-hidden />
+                  </a>
+                </div>
               </div>
             </div>
 
             <div className={`mt-8 flex flex-wrap items-center justify-between gap-3 pt-4 border-t ${COLORS.ring}`}>
               <p className="text-sm text-slate-600 dark:text-slate-400">
-                © {new Date().getFullYear()} Aline Pascale — Gestão, Impacto & Cultura.
+                © 2025 Aline Pascale — Gestão, Impacto & Estratégia
               </p>
-              <div className="flex items-center gap-2">
-                <a
-                  href={SOCIAL.instagram}
-                  target="_blank"
-                  className="rounded-lg p-2 border bg-white/80 dark:bg-slate-900/60 dark:border-white/10 hover:bg-white dark:hover:bg-slate-900 transition"
-                  aria-label="Instagram"
-                >
-                  <Instagram className="h-4 w-4" aria-hidden />
-                </a>
-                <a
-                  href={SOCIAL.linkedin}
-                  target="_blank"
-                  className="rounded-lg p-2 border bg-white/80 dark:bg-slate-900/60 dark:border-white/10 hover:bg-white dark:hover:bg-slate-900 transition"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin className="h-4 w-4" aria-hidden />
-                </a>
-              </div>
             </div>
           </div>
         </div>
@@ -525,13 +652,7 @@ function Profile() {
   const [t, setT] = useState({ x: 0, y: 0 });
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.96 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="relative"
-    >
+    <motion.div initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="relative">
       <div
         ref={ref}
         onMouseMove={(e) => {
@@ -551,18 +672,28 @@ function Profile() {
         >
           <div className="relative rounded-3xl bg-white/80 dark:bg-slate-900/60 backdrop-blur-md">
             <div className="relative aspect-square overflow-hidden rounded-3xl">
-              <SkeletonImg
-                src="/aline/images/aline.jpg"
-                alt="Aline Pascale"
-                sizes="430px"
-                className="object-cover object-top"
-              />
+              <Image src="/images/aline.png" alt="Aline Pascale" fill className="object-cover object-top" />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-white/0 via-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition duration-500" />
             </div>
           </div>
         </div>
       </div>
     </motion.div>
+  );
+}
+
+function VideoEmbed({ youtubeId, title }: { youtubeId: string; title: string }) {
+  return (
+    <div className="relative w-full overflow-hidden rounded-xl" style={{ aspectRatio: "16 / 9" }}>
+      <iframe
+        className="absolute inset-0 h-full w-full rounded-xl"
+        src={`https://www.youtube.com/embed/${youtubeId}?rel=0`}
+        title={title}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+      />
+    </div>
   );
 }
 
@@ -602,10 +733,7 @@ function ScrollProgress() {
   }, []);
   return (
     <div className="fixed top-0 left-0 right-0 z-[70]" aria-hidden>
-      <div
-        className="h-1 bg-gradient-to-r from-indigo-500 via-violet-500 to-rose-500"
-        style={{ transform: `scaleX(${p})`, transformOrigin: "0 0" }}
-      />
+      <div className="h-1 bg-gradient-to-r from-indigo-500 via-violet-500 to-rose-500" style={{ transform: `scaleX(${p})`, transformOrigin: "0 0" }} />
     </div>
   );
 }
@@ -637,15 +765,7 @@ function ThemeToggle() {
   );
 }
 
-function TopNav({
-  active,
-  open,
-  setOpen,
-}: {
-  active: string;
-  open: boolean;
-  setOpen: (v: boolean) => void;
-}) {
+function TopNav({ active, open, setOpen }: { active: string; open: boolean; setOpen: (v: boolean) => void }) {
   return (
     <>
       <div className="sticky top-0 z-[60]">
@@ -687,13 +807,7 @@ function TopNav({
       </div>
 
       {open && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="fixed inset-0 z-[80] bg-black/40"
-          onClick={() => setOpen(false)}
-          aria-hidden
-        >
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[80] bg-black/40" onClick={() => setOpen(false)} aria-hidden>
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -703,11 +817,7 @@ function TopNav({
           >
             <div className="flex items-center justify-between p-4 border-b ring-1 ring-white/60 dark:ring-white/10">
               <span className="font-semibold">Navegação</span>
-              <button
-                aria-label="Fechar"
-                onClick={() => setOpen(false)}
-                className="rounded-lg p-2 border bg-white/80 dark:bg-slate-900/60 dark:border-white/10"
-              >
+              <button aria-label="Fechar" onClick={() => setOpen(false)} className="rounded-lg p-2 border bg-white/80 dark:bg-slate-900/60 dark:border-white/10">
                 <X className="h-5 w-5" aria-hidden />
               </button>
             </div>
@@ -737,13 +847,7 @@ function TopNav({
 function WhatsAppFloat() {
   const href = `https://wa.me/${WHATSAPP.phone}?text=${encodeURIComponent(WHATSAPP.message)}`;
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Falar no WhatsApp"
-      className="fixed bottom-5 right-5 z-50 group"
-    >
+    <a href={href} target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp" className="fixed bottom-5 right-5 z-50 group">
       <span className="absolute -inset-1 rounded-full bg-green-500/40 blur-md opacity-70 group-hover:opacity-90 animate-pulse" />
       <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-green-500 text-white shadow-xl ring-1 ring-green-600/40 transition hover:scale-105">
         <MessageCircle className="h-7 w-7" aria-hidden />
@@ -753,6 +857,12 @@ function WhatsAppFloat() {
       </div>
     </a>
   );
+}
+
+/* Markdown simples (negrito) */
+function RichMarkdown({ text }: { text: string }) {
+  const html = text.trim().replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\n\n/g, "<br/><br/>");
+  return <div dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
 function Styles() {
@@ -765,12 +875,7 @@ function Styles() {
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(
-          100deg,
-          transparent 20%,
-          rgba(255, 255, 255, 0.35) 50%,
-          transparent 80%
-        );
+        background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.35) 50%, transparent 80%);
         transform: translateX(-100%);
         animation: shimmer 1.5s infinite;
       }
@@ -800,4 +905,5 @@ function Styles() {
     `}</style>
   );
 }
+
 

@@ -20,21 +20,24 @@ import {
   Sun,
   Moon,
   Award,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
-/* ============================================================================
-   CONFIG
+/* =============================================================================
+   CONFIG (links, cores, dados)
    ========================================================================== */
+// Suba estes arquivos em /public/cv e /public/certificados (ajuste nomes se quiser)
+const LINKS = {
+  cvPdf: "/cv/aline-cv.pdf",
+  premioPdf: "/certificados/aline-sebrae-2025.pdf", // opcional
+  scibizPdf: "/certificados/aline-scibiz-2025.pdf", // opcional
+};
+
 const SOCIAL = {
   instagram: "https://www.instagram.com/profe.alinepascale?igsh=bjRla2VzaWdudXFl",
   linkedin:
     "https://www.linkedin.com/in/aline-pascale-palma-068a082b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-};
-
-const LINKS = {
-  cvPdf: "/cv/aline-cv.pdf",
-  premioPdf: "/certificados/aline-sebrae-2025.pdf", // opcional
-  scibizPdf: "/certificados/scibiz-2025.pdf",       // opcional
 };
 
 const WHATSAPP = {
@@ -48,20 +51,9 @@ const COLORS = {
   ring: "ring-white/60 dark:ring-white/10",
 };
 
-/* Texto “Sobre” */
-const ABOUT_TEXT =  `
-Gestora e mentora com 33 anos de atuação em empresas privadas e públicas, especializada em
-planejamento estratégico, desenvolvimento e modelagem de negócios de impacto e estratégias de mercado.
-Professora e facilitadora em programas nacionais e internacionais, já apoiou mais de 4 mil
-empreendedores e organizações do 3º setor. Fundadora da Cuidatoria, agência de inteligência social
-focada em metodologias de gestão, tecnologia e dados para fortalecer o ecossistema.
-O Brasil tem centenas de milhares de organizações e milhões de voluntários — um gigante que precisa
-de gestão, transparência e dados. Em 2025, conquistei 1º lugar no Prêmio Sebrae Mulher de Negócios
-(Ciência e Tecnologia) com uma tecnologia que mapeia a realidade das OSCs em profundidade e gera
-bases para decisões mais seguras no setor público, privado e nas próprias organizações.
-`;
-
-/* Métricas */
+/* =============================================================================
+   DADOS
+   ========================================================================== */
 const HIGHLIGHTS = [
   { label: "Projetos geridos", value: "80+" },
   { label: "Captação viabilizada", value: "R$ 5M+" },
@@ -69,7 +61,6 @@ const HIGHLIGHTS = [
   { label: "Anos de experiência", value: "10+" },
 ] as const;
 
-/* Serviços */
 const TOOLS = [
   {
     title: "Gestão de Projetos",
@@ -93,7 +84,6 @@ const TOOLS = [
   },
 ] as const;
 
-/* Experiências (exemplo) */
 const EXPERIENCES = [
   {
     role: "Gestão & Parcerias",
@@ -115,39 +105,60 @@ const EXPERIENCES = [
   },
 ] as const;
 
-/* Parceiros (exemplo) */
+// Suba estes arquivos em /public/images/ (ou troque pelos seus)
 const PARTNERS = [
   { name: "Cuidatoria", src: "/images/cuidatoria.png" },
-  { name: "Instituto Parceiro", src: "/images/ong1.png" },
-  { name: "Instituto Parceiro", src: "/images/ong2.png" },
-  { name: "Instituto Parceiro", src: "/images/ong3.png" },
+  { name: "Instituto Parceiro 1", src: "/images/ong1.png" },
+  { name: "Instituto Parceiro 2", src: "/images/ong2.png" },
+  { name: "Instituto Parceiro 2", src: "/images/ong3.png" },
 ] as const;
 
-/* Certificados – apenas cards com botão (sem imagem solta) */
 const CERTS = [
-  { title: "Prêmio Sebrae Mulher de Negócios 2025 (1º lugar)", file: LINKS.premioPdf },
+  { title: "Prêmio Sebrae Mulher de Negócios 2025 (1º lugar — Ciência & Tecnologia/SC)", file: LINKS.premioPdf },
+  { title: "SciBiz 2025", file: LINKS.scibizPdf },
   { title: "Gestão de Projetos (certificação)", file: "/certificados/aline-gestao-projetos.pdf" },
   { title: "Captação de Recursos", file: "/certificados/aline-captacao.pdf" },
   { title: "Prestação de Contas & MROSC", file: "/certificados/aline-mrosc.pdf" },
-  { title: "SciBiz 2025", file: LINKS.scibizPdf },
-].filter((c) => !!c.file);
-
-/* Depoimento – somente Priscila */
-const TESTIMONIALS = [
-  {
-    name: "Priscila F.",
-    role: "Inovação | Coord. de Projetos | Especialista em gestão comercial",
-    photo: "",
-    text:
-      "Aline é uma força da natureza, orientada para o sucesso dos negócios. Se destaca como embaixadora das chamadas de Impacto no Impact Hub Floripa e aplica todo seu conhecimento em favor de causas de impacto, ajudando especialmente pequenos e novos empreendedores a terem maior sucesso em suas jornadas. Admiro a força que ela tem em mentorar vários negócios ao mesmo tempo, sempre com lindas entregas. É uma excelente profissional: melhora o ambiente e os resultados dos projetos que brilhantemente coordena.",
-  },
 ] as const;
 
-/* YouTube */
-const VIDEO = {
-  id: "KQvhwvKRjLU",
-  title: "PodIn Mentorando com Elas — Empreendendo no Terceiro Setor",
+/** Galeria — suba 15 imagens em /public/images/galeria/aline-01.jpeg ... -15.jpeg  */
+const PHOTOS = Array.from({ length: 15 }, (_, i) => {
+  const n = String(i + 1).padStart(2, "0");
+  return {
+    src: `/images/galeria/aline-${n}.jpeg`,
+    alt: `Aline — foto ${n}`,
+  };
+}) as { src: string; alt: string }[];
+
+const EDUCATION = [
+  {
+    inst: "Unisinos",
+    course: "Bacharel em Publicidade e Propaganda",
+    years: "1998 — 2002",
+    details: "Atividades: Vôlei, cinema, projetos sociais.",
+  },
+  { inst: "ESPM RS", course: "Pós-Graduação em Comunicação Empresarial", years: "2000 — 2002" },
+  { inst: "ESPM RS", course: "Pós-Graduação em Marketing", years: "2002 — 2004" },
+  { inst: "UDESC — ESAG", course: "MBA em Administração Geral", years: "2005 — 2007" },
+  { inst: "Faculdade Estácio de Sá", course: "MBA em Gestão de Negócios", years: "2008 — 2010" },
+] as const;
+
+/** Único depoimento (Priscila) */
+const TESTIMONIAL = {
+  name: "Priscila F.",
+  role: "Inovação | Coordenadora de Projetos | Especialista em gestão comercial",
+  text:
+    "Aline é uma força da natureza, orientada para o sucesso dos negócios. Como embaixadora das chamadas de Impacto no Impact Hub Floripa, usa seu conhecimento a favor das causas, apoiando pequenos e novos empreendedores. Admiro a capacidade de mentorar vários negócios ao mesmo tempo, com entregas consistentes: é excelente profissional, melhora o ambiente e os resultados dos projetos que coordena.",
 };
+
+/** “Sobre” — resumo com tom de autoridade/clareza */
+const ABOUT = `
+Sou gestora de projetos e parcerias com foco em impacto social e cultural. Integro estratégia, execução e transparência no dia a dia: estruturo funis de captação, defino indicadores que realmente importam e faço prestação de contas com rigor técnico. Ao longo de mais de 10 anos, gerenciei 80+ projetos, ativei 30+ parcerias e viabilizei captação acima de R$ 5 milhões — sempre com processos simples, dados objetivos e documentação impecável para dar previsibilidade a organizações e patrocinadores.
+
+Fui reconhecida em 2025 com o 1º lugar no Prêmio Sebrae Mulher de Negócios (Ciência e Tecnologia – SC), um selo do meu compromisso com resultado e inovação com responsabilidade. No campo prático, trabalho com CRM de parcerias, due diligence de OSC, enquadramento em leis de incentivo, métricas de impacto e governança (MROSC/Compliance), garantindo segurança jurídica e financeira em todas as etapas. Também atuo mentorando equipes e empreendedores, transformando metas em rotinas, relatórios e evidências claras.
+
+Minha base acadêmica combina Comunicação, Marketing e Administração/MBA — e sigo me atualizando (ex.: SciBiz 2025). O que me move é construir relações de confiança e entregar resultados sustentáveis: do diagnóstico à execução, da captação à prestação de contas, conecto pessoas, recursos e propósito com transparência e consistência. Se o seu projeto precisa ganhar tração com segurança, eu posso conduzir.
+`.trim();
 
 /* Helpers */
 const fade = (i = 0) => ({
@@ -164,13 +175,15 @@ const NAV = [
   { id: "servicos", label: "Serviços" },
   { id: "experiencia", label: "Experiência" },
   { id: "parceiros", label: "Parceiros" },
+  { id: "galeria", label: "Galeria" },
   { id: "certificados", label: "Certificados" },
+  { id: "formacao", label: "Formação" },
   { id: "depoimentos", label: "Depoimentos" },
-  { id: "midia", label: "Na mídia" },
+  { id: "video", label: "Vídeo" },
   { id: "contato", label: "Contato" },
 ] as const;
 
-/* ============================================================================
+/* =============================================================================
    PÁGINA
    ========================================================================== */
 export default function Page() {
@@ -228,7 +241,7 @@ export default function Page() {
               </h1>
               <p className="mt-3 text-lg md:text-xl text-slate-800/90 dark:text-white/90 max-w-2xl">
                 Gestão de projetos, captação e parcerias — processos simples, transparência e
-                resultados medíveis para organizações sociais e culturais.
+                resultados medíveis para organizações do 3º setor e da cultura.
               </p>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -273,27 +286,24 @@ export default function Page() {
         </div>
       </section>
 
-      {/* PRÊMIO — imagem menor e inteira */}
+      {/* PRÊMIO (DESTAQUE) */}
       <section id="premio" className="mx-auto max-w-6xl px-6 py-8">
-        <Header
-          title="Prêmio — 1º lugar"
-          subtitle="Sebrae Mulher de Negócios • Ciência e Tecnologia • 2025 • SC"
-        />
+        <Header title="Prêmio — 1º lugar" subtitle="Sebrae Mulher de Negócios • Ciência e Tecnologia • 2025 • SC" />
         <motion.div {...fade(0)} className="mt-4">
-          <div
-            className={`relative overflow-hidden rounded-2xl border ${COLORS.ring} bg-white/90 dark:bg-slate-900/70 backdrop-blur-md`}
-          >
-            <div className="grid md:grid-cols-[1.2fr,0.8fr] gap-0">
-              {/* Foto */}
-              <div className="relative h-[220px] md:h-[280px] lg:h-[340px]">
-                <Image
-                  src="/images/aline-premio.jpeg"
-                  alt="Aline recebendo o Prêmio Sebrae Mulher de Negócios 2025"
-                  fill
-                  className="object-contain"
-                  priority
-                />
-                <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/95 dark:bg-slate-900/80 px-3 py-1 text-sm shadow">
+          <div className={`relative overflow-hidden rounded-2xl border ${COLORS.ring} bg-white/90 dark:bg-slate-900/70 backdrop-blur-md`}>
+            <div className="grid md:grid-cols-[1.15fr,0.85fr]">
+              {/* Foto do prêmio — MENOR e INTEIRA */}
+              <div className="relative h-[300px] md:h-[360px] lg:h-[400px] p-3 md:p-4">
+                <div className="relative w-full h-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800">
+                  <Image
+                    src="/images/aline-premio.jpeg" // coloque a foto aqui: /public/images/aline-premio.jpeg
+                    alt="Aline recebendo o Prêmio Sebrae Mulher de Negócios 2025"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </div>
+                <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-white/95 dark:bg-slate-900/80 px-3 py-1 text-sm shadow">
                   <Award className="h-4 w-4 text-violet-600" />
                   1º lugar — SC
                 </div>
@@ -308,8 +318,8 @@ export default function Page() {
                   </span>
                 </h3>
                 <p className="mt-2 text-slate-700 dark:text-slate-300">
-                  Premiada pelo Sebrae Mulher de Negócios 2025 (categoria Ciência e Tecnologia) pelo
-                  protagonismo em gestão, inovação e impacto com transparência.
+                  Premiada no Sebrae Mulher de Negócios 2025 (categoria Ciência e Tecnologia) pelo protagonismo
+                  em gestão, inovação e impacto com transparência.
                 </p>
 
                 <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -334,13 +344,13 @@ export default function Page() {
       </section>
 
       {/* SOBRE */}
-      <section id="sobre" className="mx-auto max-w-6xl px-6 py-6">
+      <section id="sobre" className="mx-auto max-w-6xl px-6 py-8">
         <Header title="Sobre" />
-        <motion.div {...fade(0)} className="mt-3">
-          <div
-            className={`rounded-2xl border ${COLORS.ring} bg-white/80 dark:bg-slate-900/60 backdrop-blur-md p-5 md:p-6 leading-relaxed text-slate-700 dark:text-slate-300`}
-          >
-            <RichMarkdown text={ABOUT_TEXT} />
+        <motion.div {...fade(0)} className="mt-4">
+          <div className={`rounded-2xl border ${COLORS.ring} bg-white/80 dark:bg-slate-900/60 backdrop-blur-md p-5 md:p-6`}>
+            <p className="text-[15px] md:text-[16px] leading-relaxed text-slate-800 dark:text-slate-200">
+              {ABOUT}
+            </p>
           </div>
         </motion.div>
       </section>
@@ -351,9 +361,7 @@ export default function Page() {
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {TOOLS.map(({ title, desc, icon: Icon }, i) => (
             <motion.div key={title} {...fade(i)}>
-              <div
-                className={`h-full rounded-2xl border bg-white/70 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-4 hover:-translate-y-0.5 hover:shadow-md transition`}
-              >
+              <div className={`h-full rounded-2xl border bg-white/70 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-4 hover:-translate-y-0.5 hover:shadow-md transition`}>
                 <div className="flex items-start gap-3">
                   <div className="rounded-xl border p-2 bg-white dark:bg-slate-900 dark:border-white/10">
                     <Icon className="h-5 w-5" aria-hidden />
@@ -375,9 +383,7 @@ export default function Page() {
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           {EXPERIENCES.map((exp, i) => (
             <motion.div key={exp.role} {...fade(i)}>
-              <div
-                className={`rounded-2xl border bg-white/70 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-4 hover:-translate-y-0.5 hover:shadow-md transition`}
-              >
+              <div className={`rounded-2xl border bg-white/70 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-4 hover:-translate-y-0.5 hover:shadow-md transition`}>
                 <h3 className="text-lg font-semibold">{exp.role}</h3>
                 <p className="text-violet-700 dark:text-violet-300 font-medium">{exp.org}</p>
                 <p className="text-sm text-slate-600 dark:text-slate-400">{exp.period}</p>
@@ -398,9 +404,7 @@ export default function Page() {
         <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
           {PARTNERS.map((l, i) => (
             <motion.div key={l.name} {...fade(i)} className="flex items-center justify-center">
-              <div
-                className={`w-full h-[110px] md:h-[130px] rounded-xl bg-white/75 dark:bg-slate-900/60 ${COLORS.ring} shadow-sm hover:shadow-md transition p-3`}
-              >
+              <div className={`w-full h-[110px] md:h-[130px] rounded-xl bg-white/75 dark:bg-slate-900/60 ${COLORS.ring} shadow-sm hover:shadow-md transition p-3`}>
                 <div className="relative w-full h-full">
                   <SkeletonImg src={l.src} alt={l.name} sizes="260px" />
                 </div>
@@ -411,15 +415,21 @@ export default function Page() {
         </div>
       </section>
 
-      {/* CERTIFICADOS – sem imagem avulsa */}
+      {/* GALERIA (CARROSSEL) */}
+      <section id="galeria" className="mx-auto max-w-6xl px-6 py-8">
+        <Header title="Galeria" subtitle="Alguns registros das minhas entregas e jornadas." />
+        <motion.div {...fade(0)} className="mt-5">
+          <Carousel photos={PHOTOS} />
+        </motion.div>
+      </section>
+
+      {/* CERTIFICADOS (sem imagem de fundo) */}
       <section id="certificados" className="mx-auto max-w-6xl px-6 py-8">
-        <Header title="Certificados" subtitle="Baixe os arquivos oficiais." />
+        <Header title="Certificados" subtitle="Arquivos oficiais para download." />
         <div className="mt-5 grid gap-4 md:grid-cols-2">
           {CERTS.map((c, i) => (
             <motion.div key={c.title} {...fade(i)}>
-              <div
-                className={`rounded-2xl border bg-white/70 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-4 hover:-translate-y-0.5 hover:shadow-md transition`}
-              >
+              <div className={`rounded-2xl border bg-white/70 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-4 hover:-translate-y-0.5 hover:shadow-md transition`}>
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-lg bg-violet-500/15 dark:bg-violet-400/15 flex items-center justify-center">
                     <FileDown className="h-5 w-5 text-violet-700 dark:text-violet-300" aria-hidden />
@@ -439,43 +449,50 @@ export default function Page() {
         </div>
       </section>
 
-      {/* DEPOIMENTOS – somente Priscila */}
-      <section id="depoimentos" className="mx-auto max-w-6xl px-6 py-12">
-        <Header title="Depoimentos" />
-        <div className="mt-6 grid md:grid-cols-1 gap-4">
-          {TESTIMONIALS.map((t, i) => (
-            <motion.div key={t.name} {...fade(i)}>
-              <div
-                className={`rounded-2xl border bg-white/80 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-5 hover:-translate-y-0.5 hover:shadow-md transition`}
-              >
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`relative h-12 w-12 overflow-hidden rounded-full ${COLORS.ring} bg-violet-100 flex items-center justify-center font-semibold text-violet-700`}
-                  >
-                    {t.photo ? (
-                      <Image src={t.photo} alt={t.name} fill className="object-cover" />
-                    ) : (
-                      <span>{t.name.split(" ").map((s) => s[0]).join("").slice(0, 2)}</span>
-                    )}
-                  </div>
-                  <div>
-                    <p className="font-medium">{t.name}</p>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">{t.role}</p>
-                  </div>
-                </div>
-                <p className="mt-3 text-slate-700 dark:text-slate-300 leading-relaxed">{t.text}</p>
+      {/* FORMAÇÃO */}
+      <section id="formacao" className="mx-auto max-w-6xl px-6 py-8">
+        <Header title="Formação acadêmica" />
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
+          {EDUCATION.map((e, i) => (
+            <motion.div key={e.inst + e.course} {...fade(i)}>
+              <div className={`rounded-2xl border bg-white/75 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-4 hover:shadow-md transition`}>
+                <h4 className="font-semibold">{e.inst}</h4>
+                <p className="text-slate-700 dark:text-slate-300">{e.course}</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">{e.years}</p>
+                {e.details && <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{e.details}</p>}
               </div>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* NA MÍDIA – vídeo YouTube */}
-      <section id="midia" className="mx-auto max-w-6xl px-6 py-10">
-        <Header title="Na mídia" subtitle="PodIn Mentorando com Elas — Empreendendo no Terceiro Setor" />
-        <motion.div {...fade(0)} className="mt-5">
-          <div className={`rounded-2xl border ${COLORS.ring} bg-white/80 dark:bg-slate-900/60 backdrop-blur-md p-3`}>
-            <VideoEmbed youtubeId={VIDEO.id} title={VIDEO.title} />
+      {/* DEPOIMENTO (único) */}
+      <section id="depoimentos" className="mx-auto max-w-6xl px-6 py-12">
+        <Header title="Depoimento" />
+        <motion.div {...fade(0)} className="mt-6">
+          <div className={`rounded-2xl border bg-white/80 dark:bg-slate-900/60 ${COLORS.ring} backdrop-blur-md p-5 hover:shadow-md transition`}>
+            <p className="text-slate-700 dark:text-slate-300 leading-relaxed">“{TESTIMONIAL.text}”</p>
+            <div className="mt-3">
+              <p className="font-medium">{TESTIMONIAL.name}</p>
+              <p className="text-sm text-slate-500 dark:text-slate-400">{TESTIMONIAL.role}</p>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* VÍDEO */}
+      <section id="video" className="mx-auto max-w-6xl px-6 py-10">
+        <Header title="Vídeo" subtitle='PodIn "Mentorando com Elas" — Empreendendo no Terceiro Setor' />
+        <motion.div {...fade(0)} className="mt-6">
+          <div className={`relative w-full overflow-hidden rounded-2xl shadow-xl bg-black ${COLORS.ring}`} style={{ paddingTop: "56.25%" }}>
+            <iframe
+              className="absolute inset-0 h-full w-full"
+              src="https://www.youtube.com/embed/KQvhwvKRjLU"
+              title="PodIn Mentorando com Elas — Empreendendo no Terceiro Setor"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
           </div>
         </motion.div>
       </section>
@@ -483,9 +500,7 @@ export default function Page() {
       {/* CONTATO / RODAPÉ */}
       <footer id="contato" className="relative overflow-hidden">
         <div className="mx-auto max-w-6xl px-6 py-14">
-          <div
-            className={`rounded-3xl border ${COLORS.ring} bg-white/70 dark:bg-slate-900/60 backdrop-blur-md p-8 shadow-xl`}
-          >
+          <div className={`rounded-3xl border ${COLORS.ring} bg-white/70 dark:bg-slate-900/60 backdrop-blur-md p-8 shadow-xl`}>
             <div className="grid md:grid-cols-[1.2fr,0.8fr] gap-8 items-center">
               <div>
                 <h3 className="text-2xl md:text-3xl font-extrabold leading-tight">
@@ -570,7 +585,7 @@ export default function Page() {
   );
 }
 
-/* ============================================================================
+/* =============================================================================
    COMPONENTES AUXILIARES
    ========================================================================== */
 
@@ -652,7 +667,13 @@ function Profile() {
   const [t, setT] = useState({ x: 0, y: 0 });
 
   return (
-    <motion.div initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="relative">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.96 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="relative"
+    >
       <div
         ref={ref}
         onMouseMove={(e) => {
@@ -672,7 +693,13 @@ function Profile() {
         >
           <div className="relative rounded-3xl bg-white/80 dark:bg-slate-900/60 backdrop-blur-md">
             <div className="relative aspect-square overflow-hidden rounded-3xl">
-              <Image src="/images/aline.png" alt="Aline Pascale" fill className="object-cover object-top" />
+              {/* Suba /public/images/aline.png */}
+              <SkeletonImg
+                src="/images/aline.png"
+                alt="Aline Pascale"
+                sizes="430px"
+                className="object-cover object-top"
+              />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-white/0 via-white/0 to-white/20 opacity-0 group-hover:opacity-100 transition duration-500" />
             </div>
           </div>
@@ -682,17 +709,67 @@ function Profile() {
   );
 }
 
-function VideoEmbed({ youtubeId, title }: { youtubeId: string; title: string }) {
+function Carousel({ photos }: { photos: { src: string; alt: string }[] }) {
+  const [idx, setIdx] = useState(0);
+  const total = photos.length;
+
+  const prev = () => setIdx((i) => (i - 1 + total) % total);
+  const next = () => setIdx((i) => (i + 1) % total);
+  const go = (i: number) => setIdx(i);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [total]);
+
   return (
-    <div className="relative w-full overflow-hidden rounded-xl" style={{ aspectRatio: "16 / 9" }}>
-      <iframe
-        className="absolute inset-0 h-full w-full rounded-xl"
-        src={`https://www.youtube.com/embed/${youtubeId}?rel=0`}
-        title={title}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerPolicy="strict-origin-when-cross-origin"
-        allowFullScreen
-      />
+    <div className={`rounded-2xl border ${COLORS.ring} bg-white/80 dark:bg-slate-900/60 backdrop-blur-md p-3 md:p-4`}>
+      {/* Foto grande (inteira) */}
+      <div className="relative w-full h-[42vh] md:h-[56vh] rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800">
+        <Image
+          src={photos[idx].src}
+          alt={photos[idx].alt}
+          fill
+          className="object-contain"
+          priority={idx === 0}
+        />
+        <button
+          aria-label="Anterior"
+          onClick={prev}
+          className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/80 dark:bg-slate-900/70 p-2 border hover:bg-white dark:hover:bg-slate-900 transition"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+        <button
+          aria-label="Próxima"
+          onClick={next}
+          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/80 dark:bg-slate-900/70 p-2 border hover:bg-white dark:hover:bg-slate-900 transition"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
+        <div className="absolute left-1/2 -translate-x-1/2 bottom-2 text-xs px-2 py-0.5 rounded-full bg-black/50 text-white">
+          {idx + 1} / {total}
+        </div>
+      </div>
+
+      {/* Thumbnails */}
+      <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+        {photos.map((p, i) => (
+          <button
+            key={p.src}
+            onClick={() => go(i)}
+            className={`relative shrink-0 h-16 w-24 rounded-lg overflow-hidden border ${i === idx ? "ring-2 ring-violet-500" : "opacity-80 hover:opacity-100"}`}
+            aria-label={`Foto ${i + 1}`}
+            title={p.alt}
+          >
+            <Image src={p.src} alt={p.alt} fill className="object-cover" />
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
@@ -733,7 +810,10 @@ function ScrollProgress() {
   }, []);
   return (
     <div className="fixed top-0 left-0 right-0 z-[70]" aria-hidden>
-      <div className="h-1 bg-gradient-to-r from-indigo-500 via-violet-500 to-rose-500" style={{ transform: `scaleX(${p})`, transformOrigin: "0 0" }} />
+      <div
+        className="h-1 bg-gradient-to-r from-indigo-500 via-violet-500 to-rose-500"
+        style={{ transform: `scaleX(${p})`, transformOrigin: "0 0" }}
+      />
     </div>
   );
 }
@@ -765,7 +845,15 @@ function ThemeToggle() {
   );
 }
 
-function TopNav({ active, open, setOpen }: { active: string; open: boolean; setOpen: (v: boolean) => void }) {
+function TopNav({
+  active,
+  open,
+  setOpen,
+}: {
+  active: string;
+  open: boolean;
+  setOpen: (v: boolean) => void;
+}) {
   return (
     <>
       <div className="sticky top-0 z-[60]">
@@ -807,7 +895,13 @@ function TopNav({ active, open, setOpen }: { active: string; open: boolean; setO
       </div>
 
       {open && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[80] bg-black/40" onClick={() => setOpen(false)} aria-hidden>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed inset-0 z-[80] bg-black/40"
+          onClick={() => setOpen(false)}
+          aria-hidden
+        >
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -817,7 +911,11 @@ function TopNav({ active, open, setOpen }: { active: string; open: boolean; setO
           >
             <div className="flex items-center justify-between p-4 border-b ring-1 ring-white/60 dark:ring-white/10">
               <span className="font-semibold">Navegação</span>
-              <button aria-label="Fechar" onClick={() => setOpen(false)} className="rounded-lg p-2 border bg-white/80 dark:bg-slate-900/60 dark:border-white/10">
+              <button
+                aria-label="Fechar"
+                onClick={() => setOpen(false)}
+                className="rounded-lg p-2 border bg-white/80 dark:bg-slate-900/60 dark:border-white/10"
+              >
                 <X className="h-5 w-5" aria-hidden />
               </button>
             </div>
@@ -847,7 +945,13 @@ function TopNav({ active, open, setOpen }: { active: string; open: boolean; setO
 function WhatsAppFloat() {
   const href = `https://wa.me/${WHATSAPP.phone}?text=${encodeURIComponent(WHATSAPP.message)}`;
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp" className="fixed bottom-5 right-5 z-50 group">
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Falar no WhatsApp"
+      className="fixed bottom-5 right-5 z-50 group"
+    >
       <span className="absolute -inset-1 rounded-full bg-green-500/40 blur-md opacity-70 group-hover:opacity-90 animate-pulse" />
       <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-green-500 text-white shadow-xl ring-1 ring-green-600/40 transition hover:scale-105">
         <MessageCircle className="h-7 w-7" aria-hidden />
@@ -857,12 +961,6 @@ function WhatsAppFloat() {
       </div>
     </a>
   );
-}
-
-/* Markdown simples (negrito) */
-function RichMarkdown({ text }: { text: string }) {
-  const html = text.trim().replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\n\n/g, "<br/><br/>");
-  return <div dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
 function Styles() {
@@ -875,7 +973,12 @@ function Styles() {
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.35) 50%, transparent 80%);
+        background: linear-gradient(
+          100deg,
+          transparent 20%,
+          rgba(255, 255, 255, 0.35) 50%,
+          transparent 80%
+        );
         transform: translateX(-100%);
         animation: shimmer 1.5s infinite;
       }
@@ -905,5 +1008,6 @@ function Styles() {
     `}</style>
   );
 }
+
 
 
